@@ -8,18 +8,20 @@ class LaravelRating
 {
     public function rate($user, $rateable, $value)
     {
+        if (!is_array($value)) {
+            $value = ['value' => $value];
+        }
         if ($this->isRated($user, $rateable)) {
             return $user->ratings()
                         ->where('rateable_id', $rateable->id)
                         ->where('rateable_type', $this->getRateableByClass($rateable))
-                        ->update(['value' => $value]);
+                        ->update($value);
         }
 
-        return $user->ratings()->create([
+        return $user->ratings()->create(array_merge([
             'rateable_id'   => $rateable->id,
             'rateable_type' => $this->getRateableByClass($rateable),
-            'value'         => $value
-        ]);
+        ], $value));
     }
 
     public function isRated($user, $rateable)

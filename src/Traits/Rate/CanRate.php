@@ -2,7 +2,7 @@
 
 namespace Nagy\LaravelRating\Traits\Rate;
 
-use LaravelRating;
+use Nagy\LaravelRating\LaravelRating;
 use Nagy\LaravelRating\Models\Rating;
 
 trait CanRate

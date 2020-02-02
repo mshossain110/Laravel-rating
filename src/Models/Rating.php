@@ -19,4 +19,24 @@ class Rating extends Model
     {
         return $this->morphTo();
     }
+
+    public function scopePending($query)
+    {
+        $query->where('status', 'pending');
+    }
+
+    public function scopePublished($query)
+    {
+        $query->where('status', 'published');
+    }
+
+    public function scopeCanceled($query)
+    {
+        $query->where('status', 'canceled');
+    }
+
+    public function scopeInreview($query) {
+        $query->where('status', 'inreview');
+    }
+
 }

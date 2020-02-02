@@ -10,14 +10,28 @@ trait Rateable
     {
         return $this->morphMany(Rating::class, 'rateable');
     }
+    public function publishedRatings()
+    {
+        return $this->morphMany(Rating::class, 'rateable')->published();
+    }
 
     public function ratingsAvg()
     {
-        return $this->ratings()->avg('value');
+        return $this->publishedRatings()->avg('value');
     }
 
     public function ratingsCount()
     {
-        return $this->ratings()->count();
+        return $this->publishedRatings()->count();
+    }
+
+    public function getRatingsCountAttribute()
+    {
+        return $this->publishedRatings->count();
+    }
+
+    public function getRatingAvgAttribute()
+    {
+        return $this->publishedRatings->avg('value');
     }
 }
